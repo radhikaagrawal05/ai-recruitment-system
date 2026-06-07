@@ -1,15 +1,32 @@
-import express from "express";
-import dotenv from "dotenv";
-import { connectDB } from "./infrastructure/database/mongo";
+// import dotenv from "dotenv";
+// dotenv.config();
 
-dotenv.config();
-const app = express();
+// import mongoose from "mongoose";
+// import { MongoUserRepository } from "./modules/auth/infrastructure/repositories/MongoUserRepository";
+// import { User } from "./modules/auth/domain/entities/User";
+// import { UserRole } from "./modules/auth/domain/value-objects/UserRole";
 
-connectDB();
-app.get("/health", (req, res) => {
-  res.json({ message: "Server Running" });
-});
+// const MONGO_URI = process.env.MONGO_URI || "";
+// console.log("MONGO_URI is:", JSON.stringify(MONGO_URI));
 
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
-});
+// mongoose.connect(MONGO_URI).then(async () => {
+//   console.log("✅ MongoDB connected");
+
+//   const repo = new MongoUserRepository();
+
+//   const testUser = new User({
+//     name: "Rad Test",
+//     email: "rad@test.com",
+//     password: "hashedpassword123",
+//     role: UserRole.HR,
+//   });
+
+//   repo.save(testUser).then((saved) => {
+//     console.log("✅ User saved:", saved);
+//   }).catch((err) => {
+//     console.error("❌ Save error:", err);
+//   });
+
+// }).catch((err) => {
+//   console.error("❌ MongoDB connection failed:", err.message);
+// });

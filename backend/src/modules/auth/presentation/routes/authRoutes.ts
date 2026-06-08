@@ -5,6 +5,7 @@ import { registerSchema } from "../../application/validators/authValidators";
 import { LoginUser } from "../../application/use-cases/LoginUser";
 import { loginSchema } from "../../application/validators/authValidators";
 import { authenticate, AuthRequest } from "../../../../shared/middleware/authenticate";
+import { authorize } from "../../../../shared/middleware/authorize";
 const router = Router();
 
 router.post("/register", async (req: Request, res: Response) => {
@@ -68,6 +69,33 @@ router.get("/me", authenticate, (req: AuthRequest, res: Response) => {
   res.status(200).json({
     success: true,
     data: req.user,
+  });
+});
+
+// only HR can access
+router.get("/hr-only", authenticate, authorize("HR"), (req: AuthRequest, res: Response) => {
+  res.status(200).json({
+    success: true,
+    message: "Welcome HR!",
+    user: req.user,
+  });
+});
+
+// only INTERVIEWER can access
+router.get("/interviewer-only", authenticate, authorize("INTERVIEWER"), (req: AuthRequest, res: Response) => {
+  res.status(200).json({
+    success: true,
+    message: "Welcome Interviewer!",
+    user: req.user,
+  });
+});
+
+// HR and RECRUITER can access
+router.get("/hr-recruiter", authenticate, authorize("HR", "RECRUITER"), (req: AuthRequest, res: Response) => {
+  res.status(200).json({
+    success: true,
+    message: "Welcome HR or Recruiter!",
+    user: req.user,
   });
 });
 export default router;
